@@ -7,13 +7,9 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    public function verify($user_id, Request $request) 
+    public function verify($id, Request $request) 
     {
-        if (!$request->hasValidSignature()) {
-            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
-        }
-
-        $user = User::findOrFail($user_id);
+        $user = User::findOrFail($id);
 
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
